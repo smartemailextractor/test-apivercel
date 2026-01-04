@@ -11,14 +11,14 @@ app.get("/", (req, res) => {
 
 // Example route
 app.get("/api/greet/:name", (req, res) => {
-    res.send({ greeting: `Hello, ${req.params.name}!` });
+    res.json({ greeting: `Hello, ${req.params.name}!` });
 });
 
 // Export for Vercel
 module.exports = app;
 
 if (require.main === module) {
-    const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 5010;
     app.listen(port, () => {
         console.log(`Express server listening on port ${port}`);
     });

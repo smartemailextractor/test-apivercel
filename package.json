@@ -1,11 +1,31 @@
 {
-    "name": "my-express-api",
+    "name": "now-express",
     "version": "1.0.0",
-    "main": "api/index.js",
+    "description": "",
+    "main": "index.js",
     "scripts": {
-        "start": "node api/index.js"
+        "start": "node api/index.js",
+        "dev": "nodemon api/index.js"
     },
+    "keywords": [],
+    "author": "Bis",
+    "license": "MIT",
     "dependencies": {
-        "express": "^4.18.2"
+        "async": "^3.2.5",
+        "axios": "^1.7.2",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "crawler": "^1.5.0",
+        "crypto-js": "^4.2.0",
+        "deep-email-validator": "^0.1.21",
+        "dotenv": "^16.4.5",
+        "express": "^4.17.1",
+        "lodash": "^4.17.21",
+        "moment": "^2.30.1",
+        "mongoose": "^8.3.0",
+        "morgan": "^1.10.0",
+        "nodemailer": "^7.0.5",
+        "nodemon": "^3.1.4",
+        "uuidv4": "^6.2.13"
     }
 }
