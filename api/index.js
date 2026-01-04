@@ -18,7 +18,7 @@ require('dotenv').config();
 
 // ===DATABASE CONNECTION===
 // mongoose.connect('mongodb+srv://doadmin:H14tW07z68T5dym9@smartemailextarctor-0973a08f.mongo.ondigitalocean.com/smartemailextractor?tls=true&authSource=admin', { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://doadmin:H14tW07z68T5dym9@smartemailextarctor-0973a08f.mongo.ondigitalocean.com/bulkemailsender?tls=true&authSource=admin', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', (err) => {
     console.log('Failed to connect.')
@@ -28,6 +28,60 @@ db.once('open', () => {
     console.log('Successfully Connected.');
 })
 // ===DATABASE CONNECTION===
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+});
+
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+        limit: "50mb",
+        parameterLimit: 100000,
+    })
+);
+
+app.use(
+    bodyParser.json({
+        limit: "50mb",
+        parameterLimit: 100000,
+    })
+);
+
+app.use(morgan("dev"));
+app.use(cors());
+
+
+//main
+const allowOnlyMyDomains = (req, res, next) => {
+    const allowedDomains = [
+        'https://www.smartemailextractor.com',
+        'https://smartemailextractor.com',
+        // 'http://localhost:3000',
+        // 'http://localhost:5000',
+    ];
+
+    console.log(req.headers.origin);
+    console.log(allowedDomains.includes(req.headers.origin));
+
+
+    if (req.headers.origin && allowedDomains.includes(req.headers.origin)) {
+        res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+        next();
+    } else {
+        res.status(403).json({ error: 'Forbidden' });
+    }
+
+};
+//================hide this on local================
+// app.use('/api', allowOnlyMyDomains);
 
 
 
